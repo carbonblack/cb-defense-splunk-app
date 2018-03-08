@@ -1,0 +1,30 @@
+<dashboard>
+  <label>Logins to Splunk</label>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>index=_audit tag=authentication | table user, info , src, timestamp | sort - timestamp</query>
+        </search>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <map>
+        <title>Logins to Splunk</title>
+        <search>
+          <query> index=_audit tag=authentication | iplocation src | geostats latfield=lat longfield=lon count(src) by info </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="mapping.fieldColors">{succeeded:0x45ff2f,failed:0xff0000}</option>
+        <option name="mapping.markerLayer.markerMaxSize">50</option>
+        <option name="mapping.markerLayer.markerMinSize">10</option>
+        <option name="mapping.markerLayer.markerOpacity">0.85</option>
+        <option name="mapping.type">marker</option>
+      </map>
+    </panel>
+  </row>
+</dashboard>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nav color="#000">
+    <collection label="Cb Defense">
+        <view name="overview_dashboard" default="true"/>
+        <view name="Devices"/>
+        <view name="ThreatMap"/>
+        <view name="PolicyActionMap"/>
+        <view name="Logins"/>
+        <view name="search"/>
+    </collection>
+    <collection label="Splunk">
+        <view name="search"/>
+        <view name="pivot"/>
+        <view name="reports"/>
+        <view name="alerts"/>
+        <view name="dashboards"/>
+    </collection>
+</nav>

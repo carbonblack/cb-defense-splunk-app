@@ -1,0 +1,98 @@
+{
+    "requests": [
+        {
+            "request": {
+                "method": "GET", 
+                "headers": {
+                    "X-Auth-Token": "{{siem_api_key}}/{{siem_connector_id}}"
+                }, 
+                "url": "https://{{cb_defense_api_url}}/integrationServices/v3/notification"
+            }, 
+            "pre_process": {
+                "skip_conditions": [], 
+                "pipeline": []
+            }, 
+            "iteration_mode": {
+                "stop_conditions": [
+                    {
+                        "method": "json_empty", 
+                        "input": [
+                            "{{__response__.body}}", 
+                            "$.notifications"
+                        ]
+                    }
+                ], 
+                "iteration_count": "1"
+            }, 
+            "post_process": {
+                "skip_conditions": [
+                    {
+                        "method": "json_empty", 
+                        "input": [
+                            "{{__response__.body}}", 
+                            "$.notifications"
+                        ]
+                    }
+                ], 
+                "pipeline": [
+                    {
+                        "method": "json_path", 
+                        "input": [
+                            "{{__response__.body}}", 
+                            "$.notifications"
+                        ], 
+                        "output": "__stdout__"
+                    }, 
+                    {
+                        "method": "splunk_xml", 
+                        "input": [
+                            "{{__stdout__}}", 
+                            "", 
+                            "{{index}}", 
+                            "{{host}}", 
+                            "{{source}}", 
+                            "{{sourcetype}}"
+                        ], 
+                        "output": "__stdout__"
+                    }, 
+                    {
+                        "method": "std_output", 
+                        "input": [
+                            "{{__stdout__}}"
+                        ]
+                    }
+                ]
+            }
+        }
+    ], 
+    "meta": {
+        "apiVersion": "1.0.0"
+    }, 
+    "global_settings": {
+        "proxy": {
+            "host": "{{__settings__.proxy.proxy_url}}", 
+            "username": "{{__settings__.proxy.proxy_username}}", 
+            "password": "{{__settings__.proxy.proxy_password}}", 
+            "enabled": "{{__settings__.proxy.proxy_enabled}}", 
+            "type": "{{__settings__.proxy.proxy_type}}", 
+            "port": "{{__settings__.proxy.proxy_port}}", 
+            "rdns": "{{__settings__.proxy.proxy_rdns}}"
+        }, 
+        "logging": {
+            "level": "{{__settings__.logging.loglevel}}"
+        }
+    }, 
+    "tokens": [
+        "__settings__.logging.loglevel", 
+        "__settings__.proxy.proxy_enabled", 
+        "__settings__.proxy.proxy_url", 
+        "__settings__.proxy.proxy_port", 
+        "__settings__.proxy.proxy_type", 
+        "__settings__.proxy.proxy_username", 
+        "__settings__.proxy.proxy_rdns", 
+        "__settings__.proxy.proxy_password", 
+        "cb_defense_api_url", 
+        "siem_connector_id", 
+        "siem_api_key"
+    ]
+}

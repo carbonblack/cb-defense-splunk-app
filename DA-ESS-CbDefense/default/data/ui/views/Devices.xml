@@ -1,0 +1,38 @@
+<form script="drilldown_external_url.js">
+  <label>Device Search</label>
+  <description>Enter a CbD Query</description>
+  <!-- Add time range picker -->
+  <fieldset autoRun="true" submitButton="true">
+    <input type="text" token="sensor_search" searchWhenChanged="true">
+      <label>Query</label>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <map>
+        <title>Registered Devices (Map)</title>
+        <search>
+          <query>| devicesearch query="$sensor_search$" | spath | where status="REGISTERED" | iplocation
+                        lastExternalIpAddress | geostats latfield=lat longfield=lon count by lastExternalIpAddress
+                    </query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="mapping.type">marker</option>
+      </map>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Registered Devices</title>
+        <search>
+          <query>| devicesearch query="$sensor_search$" | spath | where status="REGISTERED" | table
+                        name,lastExternalIpAddress,lastInternalIpAddress,policyName,organizationName,osVersion,avStatus{},lastContact | sort - lastContact
+                    </query>
+        </search>
+      </table>
+    </panel>
+  </row>
+</form>

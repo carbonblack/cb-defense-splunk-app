@@ -1,0 +1,207 @@
+<dashboard>
+    <label>Cb Defense Overview</label>
+    <row>
+        <panel>
+            <title>Total Detections</title>
+            <single>
+                <search>
+                    <query> `cbdefense` | stats count</query>
+                    <refresh>1m</refresh>
+                    <refreshType>delay</refreshType>
+                </search>
+                <option name="colorMode">block</option>
+                <option name="drilldown">none</option>
+                <option name="rangeColors">["0x6db7c6","0x6db7c6","0x6db7c6","0x6db7c6","0x6db7c6"]</option>
+                <option name="underLabel">Detections (All Time)</option>
+                <option name="useColors">1</option>
+            </single>
+        </panel>
+        <panel>
+            <title>Total Fileless Attacks (All Time)</title>
+            <single>
+                <search>
+                    <query>`cbdefense` threatInfo.indicators{}.indicatorName=FILELESS
+                        | stats count
+                    </query>
+                    <refresh>1m</refresh>
+                    <refreshType>delay</refreshType>
+                </search>
+                <option name="colorMode">block</option>
+                <option name="drilldown">none</option>
+                <option name="rangeColors">["0x6db7c6","0x6db7c6","0x6db7c6","0x6db7c6","0x6db7c6"]</option>
+                <option name="underLabel">Fileless Attacks (All Time)</option>
+                <option name="useColors">1</option>
+            </single>
+        </panel>
+        <panel>
+            <title>Total Malware Attacks (All Time)</title>
+            <single>
+                <search>
+                    <query>`cbdefense`
+                        "threatInfo.indicators{}.indicatorName"=DETECTED_MALWARE_APP
+                        | stats count
+                    </query>
+                    <refresh>1m</refresh>
+                    <refreshType>delay</refreshType>
+                </search>
+                <option name="colorMode">block</option>
+                <option name="drilldown">none</option>
+                <option name="rangeColors">["0x6db7c6","0x6db7c6","0x6db7c6","0x6db7c6","0x6db7c6"]</option>
+                <option name="underLabel">Malware Events (All Time)</option>
+                <option name="useColors">1</option>
+            </single>
+        </panel>
+        <panel>
+            <title>Total Policy Terminate Actions</title>
+            <single>
+                <search>
+                    <query>`cbdefense`
+                        threatInfo.indicators{}.indicatorName="POLICY_TERMINATE"| stats count
+                    </query>
+                    <refresh>1m</refresh>
+                    <refreshType>delay</refreshType>
+                </search>
+                <option name="colorMode">block</option>
+                <option name="drilldown">none</option>
+                <option name="rangeColors">["0x6db7c6","0x6db7c6","0x6db7c6","0x6db7c6","0x6db7c6"]</option>
+                <option name="underLabel">Terminate Actions (All Time)</option>
+                <option name="useColors">1</option>
+            </single>
+        </panel>
+        <panel>
+            <title>Total Policy Deny Actions</title>
+            <single>
+                <search>
+                    <query>`cbdefense` threatInfo.indicators{}.indicatorName="POLICY_DENY" |
+                        stats count
+                    </query>
+                    <refresh>1m</refresh>
+                    <refreshType>delay</refreshType>
+                </search>
+                <option name="colorMode">block</option>
+                <option name="drilldown">none</option>
+                <option name="rangeColors">["0x6db7c6","0x6db7c6","0x6db7c6","0x6db7c6","0x6db7c6"]</option>
+                <option name="underLabel">Deny Actions (All Time)</option>
+                <option name="useColors">1</option>
+            </single>
+        </panel>
+    </row>
+    <row>
+        <panel>
+            <title>Cb Defense Threat Indicators (All Time)</title>
+            <chart>
+                <search>
+                    <query>`cbdefense` | top threatInfo.indicators{}.indicatorName</query>
+                    <refresh>1m</refresh>
+                    <refreshType>delay</refreshType>
+                </search>
+                <option name="charting.chart">pie</option>
+                <option name="charting.drilldown">none</option>
+                <option name="height">413</option>
+            </chart>
+        </panel>
+        <panel>
+            <title>Cb Defense Threats by Application Source (All Time)</title>
+            <chart>
+                <search>
+                    <query>`cbdefense`| top threatInfo.indicators{}.applicationName</query>
+                    <refresh>1m</refresh>
+                    <refreshType>delay</refreshType>
+                </search>
+                <option name="charting.axisTitleX.text">Application</option>
+                <option name="charting.chart">bar</option>
+                <option name="charting.drilldown">none</option>
+                <option name="charting.legend.placement">none</option>
+                <option name="height">414</option>
+            </chart>
+        </panel>
+    </row>
+    <row>
+        <panel>
+            <chart>
+                <title>Rare applications (Unknown App TTP)</title>
+                <search>
+                    <query>`cbdefense` threatInfo.indicators{}.indicatorName=UNKNOWN_APP
+                        | rename threatInfo.indicators{}.applicationName as "Application"
+                        | rare Application limit=0
+                    </query>
+                    <refresh>1m</refresh>
+                    <refreshType>delay</refreshType>
+                </search>
+                <option name="charting.chart">bar</option>
+                <option name="charting.drilldown">none</option>
+            </chart>
+        </panel>
+        <panel>
+            <chart>
+                <title>Rare Applications seen on endpoints (part of Policy action)</title>
+                <search>
+                    <query>`cbdefense` NOT policyAction.applicationName=bvs.exe AND NOT
+                        policyAction.applicationName=Sysmon*.exe AND NOT policyAction.applicationName=splunkd.exe AND
+                        NOT policyAction.reputation=TRUSTED_WHITE_LIST
+                        | rename policyAction.applicationName as "Application"
+                        | rare Application limit=0
+                    </query>
+                    <refresh>1m</refresh>
+                    <refreshType>delay</refreshType>
+                </search>
+                <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+                <option name="charting.axisLabelsX.majorLabelStyle.rotation">-45</option>
+                <option name="charting.chart">column</option>
+                <option name="charting.chart.showDataLabels">all</option>
+                <option name="charting.chart.stackMode">default</option>
+                <option name="charting.drilldown">none</option>
+                <option name="charting.layout.splitSeries">1</option>
+                <option name="charting.legend.labelStyle.overflowMode">ellipsisEnd</option>
+                <option name="charting.legend.placement">none</option>
+            </chart>
+        </panel>
+    </row>
+    <row>
+        <panel>
+            <chart>
+                <title>Top Host with Malware in the Last 30 days</title>
+                <search>
+                    <query>`cbdefense`
+                        "threatInfo.indicators{}.indicatorName"=DETECTED_MALWARE_APP
+                        | rename deviceInfo.deviceName as "Hostname"
+                        | top "Hostname"
+                    </query>
+                </search>
+                <option name="charting.chart">column</option>
+                <option name="charting.drilldown">none</option>
+            </chart>
+        </panel>
+    </row>
+    <row>
+        <panel>
+            <title>Threat Triage</title>
+            <table>
+                <search>
+                    <query>`cbdefense`
+                        | rename threatInfo.score as "Score"
+                        | eval "Triage Console Link"=url
+                        | eval "First Seen"=strftime(_time, "%m/%d/%y %I:%M:%S %p")
+                        | eval "Alert ID"=if(type=="THREAT", mvindex(split(mvindex(split(eventDescription,"]"), 4), ":
+                        "), -1) , "")
+                        | spath path=threatInfo.indicators{}.indicatorName output=_indicators
+                        | eval "Indicators"=mvjoin(_indicators, "; ")
+                        | spath path=policyAction{}.reputation output="reputation"
+                        | spath path=threatInfo.indicators{}.applicationName output=appnames
+                        | rename policyAction.applicationName as policy_appnames
+                        | rename threatInfo.summary as "threatsummary"
+                        | eval "policysummary"=ltrim(mvindex(split(eventDescription,"]"), 2), "[")
+                        | eval threat_apps=mvjoin(mvdedup(appnames), "; ")
+                        | eval "Summary"=if(type=="THREAT", threatsummary, policysummary)
+                        | eval "Tags"=if(type=="THREAT", Indicators, reputation)
+                        | eval "Applications"=if(type=="THREAT", threat_apps, policy_appnames)
+                        | rename type as "Event Category"
+                        | rename deviceInfo.deviceName as "Hostname"
+                        | table "Event Category" "Hostname" "First Seen" "Score" "Alert ID" "Triage Console Link"
+                        "Applications" "Tags", "Summary"
+                    </query>
+                </search>
+            </table>
+        </panel>
+    </row>
+</dashboard>

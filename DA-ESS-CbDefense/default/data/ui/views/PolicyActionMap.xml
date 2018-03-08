@@ -1,0 +1,45 @@
+<form script="drilldown_external_url.js">
+    <label>Policy Action Map</label>
+    <description>Enter a Policy Action Query(SPL)</description>
+    <!-- Add time range picker -->
+    <fieldset autoRun="true" submitButton="true">
+        <!-- Add Wildcard Filter -->
+        <input type="text" token="policy_search" searchWhenChanged="true">
+            <label>Query</label>
+        </input>
+    </fieldset>
+    <row>
+        <panel>
+            <map>
+                <title>Policy Actions</title>
+                <search>
+                    <query>`cbdefense` "$policy_search$" type=POLICY_ACTION | iplocation
+                        deviceInfo.externalIpAddress | geostats latfield=lat longfield=lon count by
+                        policyAction.reputation
+                    </query>
+                    <earliest>0</earliest>
+                    <latest></latest>
+                </search>
+                <option name="mapping.drilldown">none</option>
+                <option name="mapping.type">marker</option>
+                <option name="refresh.display">progressbar</option>
+                <option name="mapping.markerLayer.markerMaxSize">50</option>
+                <option name="mapping.markerLayer.markerMinSize">15</option>
+                <option name="mapping.markerLayer.markerOpacity">0.85</option>
+            </map>
+        </panel>
+    </row>
+    <row>
+        <panel>
+            <table>
+                <title>Policy Actions</title>
+                <search>
+                    <query>`cbdefense` "$policy_search$" type=POLICY_ACTION | eval eventTime=eventTime/1000 | eval eventTime = strftime(eventTime,"%a,%d %b %Y %H:%M:%S") | table
+                        deviceInfo.deviceName,policyAction.applicationName, policyAction.reputation,url, eventTime |
+                        sort eventTime
+                    </query>
+                </search>
+            </table>
+        </panel>
+    </row>
+</form>

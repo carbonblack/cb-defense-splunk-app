@@ -1,0 +1,46 @@
+<form class="form-horizontal form-complex">
+    <b>Tell me how to Identify the device(s), and what Policy to Assign</b>
+    <div class="control-group shared-controls-controlgroup">
+        <label class="control-label" for="inputtype">Event input type</label>
+        <div class="controls">
+            <div class="control">
+                <select name="action.changepolicy.param.inputtype" id="inputtype">
+                    <option value="ipaddress">Ip Address</option>
+                    <option value="deviceId">deviceId</option>
+                    <option value="hostname">Hostname</option>
+                    <option value="hostnameexact">Hostname (Exact)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="control-group shared-controls-controlgroup">
+        <label class="control-label" for="fieldname">Field Name</label>
+        <div class="controls">
+            <div class="control shared-controls-textcontrol">
+                <input type="text" class="" name="action.changepolicy.param.fieldname" id="fieldname"/>
+                <span class="help-block" style="display: block; position: static; width: auto; margin-left: 0;">
+                    Field name from result set (like deviceInfo.deviceId )
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="control-group shared-controls-controlgroup">
+        <label class="control-label" for="policyname">Policy Name</label>
+        <div class="controls">
+            <div class="control shared-controls-textcontrol">
+                <input type="text" class="" name="action.changepolicy.param.policyname" id="policyname"/>
+                <span class="help-block" style="display: block; position: static; width: auto; margin-left: 0;">
+                    Policy Name
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="control-group shared-controls-controlgroup">
+        <label class="control-label" for="dryrun">Dry run; do NOT change policy if checked</label>
+        <div class="controls">
+            <div class="control">
+                <input type="checkbox" class="" name="action.changepolicy.param.dryrun" id="dryrun"/>
+            </div>
+        </div>
+    </div>
+</form>

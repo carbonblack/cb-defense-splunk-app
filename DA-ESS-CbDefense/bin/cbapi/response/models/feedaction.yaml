@@ -1,0 +1,16 @@
+type: "object"
+required:
+- action_type
+- group_id
+- watchlist_id
+properties:
+  action_data:
+    type: "string"
+  action_type:
+    type: "integer"
+  group_id:
+    type: "integer"
+  id:
+    type: "integer"
+  watchlist_id:
+    type: "integer"
