@@ -2,8 +2,9 @@ Cb Defense Add-on for Splunk
 Current Version: 2.0.0 
 
 The Cb Defense App for Splunk allows administrators to forward events and notifications from the industry's leading NGAV solution into Splunk for correlation and analysis.
-NEW FOR 2.0.0 Release: Re-worked UI and proxy settings. Configure multiple CbD inputs rather than being limited to just one.
-
+NEW FOR 2.0.0 Release:
+    - Re-worked UI and proxy settings.
+    - Configure multiple CbD inputs rather than being limited to just one.
 Requirements
 This app requires Cb Defense and Splunk version 6.4 or above.
 

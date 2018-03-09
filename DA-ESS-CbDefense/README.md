@@ -1,24 +1,46 @@
 # Overview
 Welcome to the Cb Defense App for Splunk.
 
-This app gives Slunk administrators the ability to leverage the market's leading NGAV solution.
+The Cb Defense App for Splunk integrates Cb Defense with the Splunk Enterprise!
+
+The V1.0.0 Release includes pre-built visualizations from Cb's Internal Threat researchers: 
+to view the status of Cb Defense environments, search through threat and policy notifications, view and manipulate device status, etc. 
 
 Features: 
-- Environment Overview 
-- Threat Search 
+- CbD Overview 
+    - Comprehensive Overview of your Cb defense data in Splunk
+    - view total detections, policy actions, rare applications
+    - triage threats
+- Threat Search
+    - goeip map of threats based on severity
+    - additional table of threat information 
+    - searchable (SPL) to isolate events of interest
 - Policy Action Search
-- Login Map
+    - geoip map of Policy Actions by reputation
+    - tabular display of policy activities
+    - searchable (SPL) to isolate events of interest 
+- Login Map (Splunk)
+    - geoip map and table of Logins to Splunk instances
+    - failures and success
 - Device Search 
+    - uses devices rest API to retrieve device status information 
+    - geoip map of devices by external IP's + table of the same
+    - enter a device query (As per CbD device guide) to filter results
+    
 
 Adaptive Response framework and Splunk Threat Intelligence Framework integration - can create Notable Events from CbD Data.
 
 Currently supported (V1.0.0) AR actions: 
 - Change Cb Defense Sensor Policy
-    - Lets the Splunk operator change the assinged security policy of one or more CbD devices based from Ip Address, hostname, deviceId etc
+    - Lets the Splunk operator change the assigned security policy of one or more Cb Defense devices based from Ip Address, hostname, deviceId etc
+#Requirements: 
+(hard) - CbD notification Data in Splunk
+(soft) - CbD Add-On for Splunk. 
 
-#Installation:
+Advanced/Power users can feel free to ingest their CbD data into Splunk by some other means, but the Cb Defense App for splunk expects 
+data to be provided by the CbD Add-on for Splunk.
 
-Download the app from SplunkBase, or build from the source available on github.
+Download the app from Splunkbase, or build from the source available on github.
 
 # Setup & Configuration
 
@@ -81,3 +103,8 @@ The Change Cb Defense Sensor Policy Adaptive Response action has 3 important con
             - [API Documentation](http://docs.splunk.com/Documentation/JavaScriptSDK) (docs.splunk.com)
             - [On GitHub](https://github.com/splunk/splunk-sdk-javascript)
             - [Main Website](http://dev.splunk.com/javascript) (dev.splunk.com)
+# Credits 
+This project is maintained and delivered by the Carbon Black Developer Relations team / Developer Network.
+JG, JM , ZE & SM 2017.
+Contact us !!! dev-support@carbonblack.com.
+Additional credits to Cb's Jimmy Astle for providing excellent source visualizations and direction. 

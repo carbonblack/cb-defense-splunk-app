@@ -34,7 +34,7 @@
       <table>
         <title>Threats</title>
         <search>
-          <query>`cbdefense` "$threat_search$" type=THREAT | eval eventTime= eventTime/1000 | eval eventTime = strftime(eventTime,"%a,%d %b %Y %H:%M:%S") | table
+          <query>`cbdefense` "$threat_search$" type=THREAT | eval eventTime=eventTime/1000 | eval eventTime = strftime(eventTime,"%a,%d %b %Y %H:%M:%S") | table
                         deviceInfo.deviceName,threatInfo.score,threatInfo.summary,url,eventTime | sort  - eventTime
                     </query>
         </search>
