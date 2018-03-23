@@ -46,25 +46,23 @@ class ChangePolicyAction(ModularAction):
 
         logger.info("Changing policy for device {0} by {1} to policy {2}".format(device,inputtype,policyName))
 
-        devices = [] #list of devices on whom to act
-        #check by ID, Ip and hostname
         if inputtype == "deviceId":
-            devices = filter(lambda d: d.deviceId == device, list(cb.select(Device)))
+            devices = list(cb.select(Device).where("deviceId:%s" % device))
         if inputtype == "ipaddress":
-            devices = cb.select(Device).where('ipAddress:%s' % device)
+            devices = list(cb.select(Device).where('ipAddress:%s' % device))
         if inputtype == "hostname":
-            devices = cb.select(Device).where('hostName:%s' % device)
+            devices = list(cb.select(Device).where('hostName:%s' % device))
         if inputtype == "hostnameexact":
-            devices = cb.select(Device).where('hostNameExact:%s' % device)
+            devices = list(cb.select(Device).where('hostNameExact:%s' % device))
 
         try:
             for d in devices:
                 d.policyName = policyName
                 d.save()
-        except ServerError as e:
+        except:
             raise
         else:
-            logger.info("Sensor {} now assigned to policy {}".format(device, policyName))
+            logger.info("Sensors {} now assigned to policy {}".format(devices, policyName))
             return True
 
     def do_genericevent(self, cb, result):
