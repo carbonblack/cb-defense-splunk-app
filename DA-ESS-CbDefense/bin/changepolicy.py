@@ -47,7 +47,7 @@ class ChangePolicyAction(ModularAction):
         logger.info("Changing policy for device {0} by {1} to policy {2}".format(device,inputtype,policyName))
 
         if inputtype == "deviceId":
-            devices = list(cb.select(Device).where("deviceId:%s" % device))
+            devices = filter(lambda d: d.deviceId == int(device) , list(cb.select(Device)))
         if inputtype == "ipaddress":
             devices = list(cb.select(Device).where('ipAddress:%s' % device))
         if inputtype == "hostname":

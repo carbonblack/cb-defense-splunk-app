@@ -4,6 +4,7 @@
   <fieldset autoRun="true" submitButton="true">
     <input type="text" token="threat_search" searchWhenChanged="true">
       <label>Query</label>
+      <default> </default>
     </input>
   </fieldset>
   <row>

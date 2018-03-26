@@ -5,6 +5,7 @@
   <fieldset autoRun="true" submitButton="true">
     <input type="text" token="sensor_search" searchWhenChanged="true">
       <label>Query</label>
+      <default> </default>
     </input>
   </fieldset>
   <row>

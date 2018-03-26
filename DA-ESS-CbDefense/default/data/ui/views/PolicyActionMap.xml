@@ -6,6 +6,7 @@
         <!-- Add Wildcard Filter -->
         <input type="text" token="policy_search" searchWhenChanged="true">
             <label>Query</label>
+            <default> </default>
         </input>
     </fieldset>
     <row>
