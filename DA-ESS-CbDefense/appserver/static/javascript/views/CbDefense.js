@@ -381,8 +381,6 @@ define(
                     storage_password = storage_passwords[index];
                     storage_password_stanza_name = storage_password.name;
                     if  (storage_password_stanza_name.includes(realm_name)) {
-                        console.log("Storage Password");
-                        console.log(storage_password);
                         storage_passwords_found.push(storage_password);
                     }
                 }
