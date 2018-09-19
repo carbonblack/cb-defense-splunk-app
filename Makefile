@@ -1,7 +1,7 @@
 all: app addon
 
 addon: APPNAME=TA-Cb_Defense
-addon: VERSION=2.0.1
+addon: VERSION=2.0.2
 addon: BUNDLE=$(APPNAME)-$(VERSION)
 addon: $(APPNAME).spl
 
