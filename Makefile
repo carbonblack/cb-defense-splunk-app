@@ -6,7 +6,7 @@ addon: BUNDLE=$(APPNAME)-$(VERSION)
 addon: $(APPNAME).spl
 
 app: APPNAME=DA-ESS-CbDefense
-app: VERSION=1.0.0
+app: VERSION=1.0.1
 app: BUNDLE=$(APPNAME)-$(VERSION)
 app: $(APPNAME).spl
 
