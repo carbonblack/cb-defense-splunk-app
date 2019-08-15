@@ -4,7 +4,7 @@
             "request": {
                 "method": "GET", 
                 "headers": {
-                    "X-Auth-Token": "{{siem_api_key}}/{{siem_connector_id}}"
+                    "X-Auth-Token": "{{siem_api_secret_key}}/{{siem_api_id}}"
                 }, 
                 "url": "https://{{cb_defense_api_url}}/integrationServices/v3/notification"
             }, 
@@ -92,7 +92,7 @@
         "__settings__.proxy.proxy_rdns", 
         "__settings__.proxy.proxy_password", 
         "cb_defense_api_url", 
-        "siem_connector_id", 
-        "siem_api_key"
+        "siem_api_id", 
+        "siem_api_secret_key"
     ]
 }
