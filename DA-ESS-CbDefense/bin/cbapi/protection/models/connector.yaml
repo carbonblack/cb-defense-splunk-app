@@ -9,7 +9,7 @@ required:
 properties:
   id:
     type: "integer"
-    description: "Unique connector Id"
+    description: "Unique API ID"
   name:
     type: "string"
     description: "Name of the connector. Note that only non-internal connectors can be renamed"
