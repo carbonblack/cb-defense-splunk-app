@@ -1,5 +1,5 @@
 Cb Defense Add-on for Splunk
-Current Version: 2.0.0
+Current Version: 2.0.3
 
 The Cb Defense App for Splunk allows administrators to forward events and notifications from the industry's leading NGAV solution into Splunk for correlation and analysis.
 NEW FOR 2.0.0 Release:
@@ -23,17 +23,17 @@ Go to the "Inputs" tab and create a new input called "cbdefense" (name is not si
 Set the interval to 300, or faster if you prefer.
 Enter the API hostname for your Cb Defense instance in the url field - for most customers this will be "api5.conferdeploy.net". If unsure, contact your support representative.
 Make sure to omit the https://, https:// urls are required.
-Enter your SIEM type api key and connector ID in the input boxes.
+Enter your SIEM type api secret key and API ID in the input boxes.
 The Cb Defense app for Splunk uses Splunk’s encrypted credential storage facility to store the API token for your Cb Defense server, so the API key is stored securely on the Splunk server.
 
 CLI configuration:
 In $SPLUNK_HOME/etc/apps/TA-Cb_Defense/local/inputs.conf:
 
 [carbonblack_defense://<inputname>]
-cb_defense_api_url = <IP or hostname of Cb Defense Server> 
+cb_defense_api_url = <IP or hostname of Cb Defense Server>
 interval = 60
-siem_api_key = <Enter your API key> 
-siem_connector_id = <Enter your connector Id> 
+siem_api_secret_key = <Enter your API key>
+siem_api_id = <Enter your API ID>
 
 Example Notifications:
 {"eventTime": 1518208676297, "policyAction": {"applicationName": "svchost.exe", "action": null, "reputation": "TRUSTED_WHITE_LIST", "sha256Hash": "121118a0f5e0e8c933efd28c9901e54e42792619a8a3a6d11e1f0025a7324bc2"}, "eventDescription": "[jason-splunk-test-action-deny] [Confer has blocked a threat for you.] [An executable was RUN_BLOCK on a device registered to zestep@carbonblack.com.] [Group: Restrictive_Windows_Workstation] [Device: zewinsevsensor] [SHA256: 121118a0f5e0e8c933efd28c9901e54e42792619a8a3a6d11e1f0025a7324bc2]\n", "url": "https://defense-eap01.conferdeploy.net/investigate?s[searchWindow]=ALL&s[c][QUERY_STRING_TYPE][0]=029f675a0aa611e882c127a75a4ef2d2&s[c][DEVICE_ID][0]=6494", "deviceInfo": {"deviceName": "zewinsevsensor", "targetPriorityCode": 0, "internalIpAddress": "172.17.178.130", "deviceHostName": null, "groupName": "Restrictive_Windows_Workstation", "externalIpAddress": "144.121.23.203", "deviceType": "WINDOWS", "deviceId": 6494, "targetPriorityType": "MEDIUM", "email": "zestep@carbonblack.com", "deviceVersion": null}, "ruleName": "jason-splunk-test-action-deny", "type": "POLICY_ACTION"}
