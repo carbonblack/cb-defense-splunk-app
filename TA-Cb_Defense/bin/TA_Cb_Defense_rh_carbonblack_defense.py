@@ -44,7 +44,7 @@ fields = [
         )
     ), 
     field.RestField(
-        'siem_connector_id',
+        'siem_api_id',
         required=True,
         encrypted=False,
         default=None,
@@ -54,7 +54,7 @@ fields = [
         )
     ), 
     field.RestField(
-        'siem_api_key',
+        'siem_api_secret_key',
         required=True,
         encrypted=True,
         default=None,
