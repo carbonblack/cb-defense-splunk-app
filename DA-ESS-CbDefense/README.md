@@ -44,7 +44,7 @@ Currently supported adaptive response actions:
 
 Download the app from Splunkbase, or build from the source available on github.
 
-##(basic)
+## (basic)
 
 Use the gear icon from the Splunk left hand navigation bar to 'manage apps' - select Cb Defense and click 'setup'
 
@@ -54,7 +54,7 @@ Enter your API Secret Key (Must be type API or Live Response ) in the API Secret
 
 Enter your API ID (Must be type API or Live Response) in the API ID input Field.
 
-##(advanced)
+## (advanced)
 
 The app comes loaded with a search macro `cbdefense` in default/macros.conf that defines Carbon Black Defense events. This is used to power most of the visualizations.
 In order to support all use cases, it defaults to :
@@ -64,7 +64,7 @@ If you would like to only search specific indexes, change the macro (UI accessib
 
 For instance, if you would like to use the 'carbonblack' index change the macro to indicate index="carbonblack".
 
-#Adaptive Response Configuration
+# Adaptive Response Configuration
 
 The Change Cb Defense Change Sensor Policy Adaptive Response action has 3 important configuration options:
 - 'inputtype' either Ip Address, deviceId , hostname, or hostname exact
@@ -74,14 +74,15 @@ The Change Cb Defense Change Sensor Policy Adaptive Response action has 3 import
   - ex , when inputtype = deviceId, fieldname = deviceInfo.deviceId the modular action will try to find a sensor by the deviceId in the 'deviceInfo.deviceId' of the incoming result set
 -  Policy Name - the Cb Defense Policy to be applied to the targeted sensors. The policy must exist.  For instance 'default' or 'Restrictive_Windows_Workstation' .
  - note: If you try to change from policy A to policy A for sensor B , it will always succeed.
-##example data and configuration
+## example data and configuration
 `{"eventTime": 1517863503153, "policyAction": {"applicationName": "svchost.exe", "action": null, "reputation": "TRUSTED_WHITE_LIST", "sha256Hash": "1d35014d937e02ee090a0cfc903ee6e6b1b65c832694519f2b4dc4c74d3eb0fd"}, "eventDescription": "[jason-splunk-test-action-deny] [Confer has blocked a threat for you.] [An executable was RUN_BLOCK on a device registered to jgarman+po@carbonblack.com.] [Group: jan09-demo] [Device: WIN-IA9NQ1GN8OI] [SHA256: 1d35014d937e02ee090a0cfc903ee6e6b1b65c832694519f2b4dc4c74d3eb0fd]\n", "url": "https://defense-eap01.conferdeploy.net/investigate?s[searchWindow]=ALL&s[c][QUERY_STRING_TYPE][0]=f05da5560ab411e8834a939ef3e75232&s[c][DEVICE_ID][0]=5798", "deviceInfo": {"deviceName": "WIN-IA9NQ1GN8OI", "targetPriorityCode": 0, "internalIpAddress": "172.22.5.141", "deviceHostName": null, "groupName": "jan09-demo", "externalIpAddress": "70.106.217.80", "deviceType": "WINDOWS", "deviceId": 5798, "targetPriorityType": "LOW", "email": "jgarman+po@carbonblack.com", "deviceVersion": null}, "ruleName": "jason-splunk-test-action-deny", "type": "POLICY_ACTION"}
 `
 We can change sensor policy by hostname using inputtype = hostname or hostnameexact, and targetig the 'deviceInfo.deviceName' field.
 To target the deviceId, use deviceInfo.deviceId and inputtype = hostname
 In general, Splunk operators are not limited to using only the dataprovided by the Cb Defense Add-on for Splunk - but must configure the Adaptive Response action appropriately.
 
-#Debugging and Logging information
+# Debugging and Logging information
+
 The Add-On log level and debugging configuration is seperate from the App. If you're having problems getting data into Splunk, raise the log level in the Add-On and check the add-on logs.
 
 The App logs to the $SPLUNK_HOME/var/log directory.
