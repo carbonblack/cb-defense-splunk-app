@@ -39,17 +39,17 @@ define(
                 var api_url = api_url_input_element.val();
                 var sanitized_api_url = this.sanitize_string(api_url);
 
-                var api_key_input_element = jquery("input[name=api_key]");
-                var api_key = api_key_input_element.val();
-                var sanitized_api_key = this.sanitize_string(api_key);
+                var api_secret_key_input_element = jquery("input[name=api_secret_key]");
+                var api_secret_key = api_secret_key_input_element.val();
+                var sanitized_api_secret_key = this.sanitize_string(api_secret_key);
 
-                var connector_id_input_element = jquery("input[name=connector_id]");
-                var connector_id = connector_id_input_element.val();
-                var sanitized_connector_id = this.sanitize_string(connector_id);
+                var api_id_input_element = jquery("input[name=api_id]");
+                var api_id = api_id_input_element.val();
+                var sanitized_api_id = this.sanitize_string(api_id);
 
                 var error_messages_to_display = this.validate_inputs(
                     sanitized_api_url,
-                    sanitized_api_key,
+                    sanitized_api_secret_key,
                 );
 
                 var did_error_messages_occur = error_messages_to_display.length > 0;
@@ -61,14 +61,14 @@ define(
                     this.perform_setup(
                         splunk_js_sdk,
                         fully_qualified_url,
-                        sanitized_api_key,
-                        sanitized_connector_id
+                        sanitized_api_secret_key,
+                        sanitized_api_id
                     );
                 }
             },
 
             // This is where the main setup process occurs
-            perform_setup: async function perform_setup(splunk_js_sdk, api_url, api_key,connector_id) {
+            perform_setup: async function perform_setup(splunk_js_sdk, api_url, api_secret_key, api_id) {
                 var app_name = "DA-ESS-CbDefense";
 
                 var application_name_space = {
@@ -91,11 +91,11 @@ define(
                     //    api_url,
                     //);
 
-                    await this.create_custom_conf(splunk_js_sdk_service,"DA-ESS-CbDefense_settings",{"api":{api_url:api_url,connector_id:connector_id}});
+                    await this.create_custom_conf(splunk_js_sdk_service,"DA-ESS-CbDefense_settings",{"api":{api_url:api_url,api_id:api_id}});
 
                     // Creates the passwords.conf stanza that is the encryption
-                    // of the api_key provided by the user
-                    await this.encrypt_api_key(splunk_js_sdk_service, api_key);
+                    // of the api_secret_key provided by the user
+                    await this.encrypt_api_secret_key(splunk_js_sdk_service, api_secret_key);
 
                     // Completes the setup, by access the app.conf's [install]
                     // stanza and then setting the `is_configured` to true
@@ -165,9 +165,9 @@ define(
                     }
                 },
 
-            encrypt_api_key: async function encrypt_api_key(
+            encrypt_api_secret_key: async function encrypt_api_secret_key(
                 splunk_js_sdk_service,
-                api_key,
+                api_secret_key,
             ) {
                 var realm = "DA-ESS-CbDefense_realm";
                 var username = "admin";
@@ -196,7 +196,7 @@ define(
                     storage_passwords_accessor,
                     realm,
                     username,
-                    api_key,
+                    api_secret_key,
                 );
             },
 
@@ -558,28 +558,28 @@ define(
                 return error_messages;
             },
 
-            validate_api_key_input: function validate_api_key_input(api_key) {
+            validate_api_secret_key_input: function validate_api_secret_key_input(api_secret_key) {
                 var error_messages = [];
 
-                var is_string_empty = typeof api_key === "undefined" || api_key === "";
+                var is_string_empty = typeof api_secret_key === "undefined" || api_secret_key === "";
 
                 if (is_string_empty) {
                     error_message =
-                        "The `API Key` specified was empty. Please provide" + " a value.";
+                        "The `API Secret Key` specified was empty. Please provide" + " a value.";
                     error_messages.push(error_message);
                 }
 
                 return error_messages;
             },
 
-            validate_inputs: function validate_inputs(hostname, api_key) {
+            validate_inputs: function validate_inputs(hostname, api_secret_key) {
                 var error_messages = [];
 
                 var api_url_errors = this.validate_api_url_input(hostname);
-                var api_key_errors = this.validate_api_key_input(api_key);
+                var api_secret_key_errors = this.validate_api_secret_key_input(api_secret_key);
 
                 error_messages = error_messages.concat(api_url_errors);
-                error_messages = error_messages.concat(api_key_errors);
+                error_messages = error_messages.concat(api_secret_key_errors);
 
                 return error_messages;
             },
@@ -674,27 +674,27 @@ define(
                     "                </div>" +
                     "            </div>" +
                     "        </div>" +
-                    "        <div class='field api_key'>" +
+                    "        <div class='field api_secret_key'>" +
                     "            <div class='title'>" +
-                    "                <h3>API Key:</h3>" +
-                    "                Please specify the API Key that will be used to authenticate to the CbD API (TYPE API OR LIVERESPONSE)." +
+                    "                <h3>API Secret Key:</h3>" +
+                    "                Please specify the API Secret Key that will be used to authenticate to the CbD API (TYPE API OR LIVERESPONSE)." +
                     "            </div>" +
                     "            </br>" +
                     "            <div class='user_input'>" +
                     "                <div class='text'>" +
-                    "                    <input type='text' name='api_key' placeholder='*******************'></input>" +
+                    "                    <input type='text' name='api_secret_key' placeholder='*******************'></input>" +
                     "                </div>" +
                     "            </div>" +
                     "        </div>" +
-                    "        <div class='field connector_id'>" +
+                    "        <div class='field api_id'>" +
                     "            <div class='title'>" +
-                    "                <h3>ConnectorId:</h3>" +
-                    "                Please specify the ConnectorID that will be used to authenticate to the CbD API (TYPE API OR LIVERESPONSE)." +
+                    "                <h3>API ID:</h3>" +
+                    "                Please specify the API ID that will be used to authenticate to the CbD API (TYPE API OR LIVERESPONSE)." +
                     "            </div>" +
                     "            </br>" +
                     "            <div class='user_input'>" +
                     "                <div class='text'>" +
-                    "                    <input type='text' name='connector_id' placeholder='12345'></input>" +
+                    "                    <input type='text' name='api_id' placeholder='12345'></input>" +
                     "                </div>" +
                     "            </div>" +
                     "        </div>" +

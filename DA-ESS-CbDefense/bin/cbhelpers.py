@@ -24,22 +24,22 @@ except ImportError:
 def get_creds(splunk_service):
     api_credentials = splunk_service.storage_passwords["credential:DA-ESS-CbDefense_realm:admin:"]
 
-    api_key = api_credentials.clear_password
+    api_secret_key = api_credentials.clear_password
 
     cb_server = splunk_service.confs["DA-ESS-CbDefense_settings"]["api"]['api_url']
-    connector_id = splunk_service.confs["DA-ESS-CbDefense_settings"]["api"]['connector_id']
+    api_id = splunk_service.confs["DA-ESS-CbDefense_settings"]["api"]['api_id']
 
-    if not cb_server or not api_key or not connector_id:
+    if not cb_server or not api_secret_key or not api_id:
         raise CredentialMissingError(
-            "Please visit the Set Up Page for the Cb DefenseApp for Splunk to set the API URL, API key & Connector Id for your Cb Defense server.")
+            "Please visit the Set Up Page for the Cb DefenseApp for Splunk to set the API URL, API secret key & API Id for your Cb Defense server.")
 
-    return cb_server, api_key, connector_id
+    return cb_server, api_secret_key, api_id
 
 
 
 def get_cbapi(splunk_service):
-    cb_server, api_key, connector_id = get_creds(splunk_service)
-    return CbDefenseAPI(token="{0}/{1}".format(api_key,connector_id), url=cb_server)
+    cb_server, api_secret_key, api_id = get_creds(splunk_service)
+    return CbDefenseAPI(token="{0}/{1}".format(api_secret_key,api_id), url=cb_server)
 
 
 class CbSearchCommand2(EventingCommand):
