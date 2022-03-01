@@ -1,3 +1,9 @@
+The Cb Defense App for Splunk has been deprecated.
+
+Customers should update to the VMware Carbon Black Cloud App for Splunk.  Information is available on 
+the [Developer Network](https://developer.carbonblack.com/reference/carbon-black-cloud/integrations/splunk-app/) 
+and the app is available for download from [splunkbase](https://splunkbase.splunk.com/app/5332/).  
+
 # Overview
 
 Cb Defense integration with Splunk has two principal components: the *Cb Defense Add-on for Splunk* and the *Cb Defense App for Splunk*. To get started with the integration, you will want to install the *Cb Defense Add-on for Splunk* to pull the Cb Defense data into your Splunk server. The Add-on provides a one-way integration between Cb Defense and Splunk, periodically polling the Cb Defense cloud to retrieve alert notifications and index those notifications in your Splunk server.
