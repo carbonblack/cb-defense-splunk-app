@@ -1,6 +1,6 @@
 The Cb Defense App for Splunk has been deprecated.
 
-Customers should update to the VMware Carbon Black Cloud app for Splunk.  Information is available on 
+Customers should update to the VMware Carbon Black Cloud App for Splunk.  Information is available on 
 the [Developer Network](https://developer.carbonblack.com/reference/carbon-black-cloud/integrations/splunk-app/) 
 and the app is available for download from [splunkbase](https://splunkbase.splunk.com/app/5332/).  
 
